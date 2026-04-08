@@ -53,7 +53,7 @@ plot_ForestPlot <- function( datas, files_meta, islowCpg, gwana_dir, metaname, f
    })
    names(cohorts) <- files_meta
    ts <- 0
-   # Get Forest plot for Common (=common) and Random effects
+   # Get Forest plot for Common (=Fixed) and Random effects
    for ( d in 1:length(datas) )    # ==> TOT AIXÒ S'HA DE VECTORITZAR
    {
       data <- datas[[d]]
