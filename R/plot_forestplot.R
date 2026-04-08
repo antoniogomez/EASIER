@@ -31,7 +31,7 @@ plot_ForestPlot <- function( datas, files_meta, islowCpg, gwana_dir, metaname, f
       }
    }
 
-   type = c('Fixed','Random')
+   type = c('Common','Random')
 
    names(files_meta) <- files_meta
    cohorts_names <- split(unname(files_meta),names(files_meta))
@@ -53,7 +53,7 @@ plot_ForestPlot <- function( datas, files_meta, islowCpg, gwana_dir, metaname, f
    })
    names(cohorts) <- files_meta
    ts <- 0
-   # Get Forest plot for Fixed and Random effects
+   # Get Forest plot for Common (=common) and Random effects
    for ( d in 1:length(datas) )    # ==> TOT AIXÒ S'HA DE VECTORITZAR
    {
       data <- datas[[d]]
@@ -130,9 +130,9 @@ plot_ForestPlot <- function( datas, files_meta, islowCpg, gwana_dir, metaname, f
                   message(cpg);
                   dataf <- bb[[cpg]]
                   if(packageVersion("meta") > "5.0.0") {
-                     mtg <- meta::metagen(unlist(dataf[,"BETA"]), unlist(dataf[,"SE"]), sm="MD", studlab=rownames(dataf), random=TRUE, fixed = TRUE)
+                     mtg <- meta::metagen(unlist(dataf[,"BETA"]), unlist(dataf[,"SE"]), sm="MD", studlab=rownames(dataf), random=TRUE, common = TRUE)
                   } else {
-                     mtg <- meta::metagen(unlist(dataf[,"BETA"]), unlist(dataf[,"SE"]), sm="MD", studlab=rownames(dataf), comb.random=TRUE, comb.fixed = TRUE)
+                     mtg <- meta::metagen(unlist(dataf[,"BETA"]), unlist(dataf[,"SE"]), sm="MD", studlab=rownames(dataf), comb.random=TRUE, comb.common = TRUE)
                   }
 
 
@@ -141,8 +141,8 @@ plot_ForestPlot <- function( datas, files_meta, islowCpg, gwana_dir, metaname, f
                   # rasterpdf::raster_pdf(paste0( path, "/FP_", cpg,"_",type[ts] ,".pdf"), res = 600)
                   pdf(paste0( path, "/FP_", cpg,"_",type[ts] ,".pdf"))
                   par(mar = c(0, 0, 0, 0))
-                  meta::forest(mtg, leftcols=c("studlab"), leftlabs=c("Cohort"), rightcols=c("effect", "ci","pval","w.fixed","w.random"), fontsize=7, digits=3, print.pval=TRUE, addrow.overall=T,
-                               col.fixed="red", col.random="blue",print.tau2 = FALSE, smlab = "", col.diamond.fixed="red", col.diamond.random = "blue", overall= T, test.overall=T,
+                  meta::forest(mtg, leftcols=c("studlab"), leftlabs=c("Cohort"), rightcols=c("effect", "ci","pval","w.common","w.random"), fontsize=7, digits=3, print.pval=TRUE, addrow.overall=T,
+                               col.common="red", col.random="blue",print.tau2 = FALSE, smlab = "", col.diamond.common="red", col.diamond.random = "blue", overall= T, test.overall=T,
                                fs.test.overall=7, fs.hetstat=5, fs.axis=5, pooled.totals=TRUE)
                   dev.off()
 
